@@ -8,6 +8,7 @@ import com.mastercoding.coroutinesapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
@@ -24,20 +25,28 @@ class MainActivity : AppCompatActivity() {
 
 
             // Using Coroutines
-           // CoroutineScope(Dispatchers.IO).launch {
-                downloadBigFileFromNet()
+           CoroutineScope(Dispatchers.IO).launch {
+               downloadBigFileFromNet()
 
-
+           }
         }
         //When the user click on the download button, it will simulate a downloading file from internet and this
         //will be triggering a function called download big file from net.
         //I made a loop for loop that counts from 1 to 100000 times.
 
     }
-    private fun downloadBigFileFromNet() {
+    private suspend fun downloadBigFileFromNet() {
         for(i in 1..100000){
             //Log.i("TAGY", "Downloading $i in ${Thread.currentThread().name}")
-            binding.tvdownloadProgress.text="$i in ${Thread.currentThread().name}"
+
+            //I need to update the main thread in order to update the views in terms.
+            //So I need to switch between the background And the main thread in order to update the main thread and update the text view.
+            //So here I will use that withcontext function.
+            withContext(Dispatchers.Main){
+                binding.tvdownloadProgress.text="$i in ${Thread.currentThread().name}"
+
+
+            }
         }
         //And this playing log message with tag tag.
         //And the message is downloading.
