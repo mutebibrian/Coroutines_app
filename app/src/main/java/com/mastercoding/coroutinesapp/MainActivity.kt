@@ -24,16 +24,25 @@ class MainActivity : AppCompatActivity() {
 
 
             // Using Coroutines
-            CoroutineScope(Dispatchers.IO).launch {
+           // CoroutineScope(Dispatchers.IO).launch {
                 downloadBigFileFromNet()
-            }
+
 
         }
+        //When the user click on the download button, it will simulate a downloading file from internet and this
+        //will be triggering a function called download big file from net.
+        //I made a loop for loop that counts from 1 to 100000 times.
 
     }
     private fun downloadBigFileFromNet() {
         for(i in 1..100000){
-            Log.i("TAGY", "Downloading $i in ${Thread.currentThread().name}")
+            //Log.i("TAGY", "Downloading $i in ${Thread.currentThread().name}")
+            binding.tvdownloadProgress.text="$i in ${Thread.currentThread().name}"
         }
+        //And this playing log message with tag tag.
+        //And the message is downloading.
+        //And here is the number that it is currently
+        //currently like counting it and here it displaying the name of the thread.
+        //That it's working in it.
     }
 }
